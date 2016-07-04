@@ -28,6 +28,10 @@
       <h3>New Pet</h3>
       <div style="margin-left:30px;">
         <div class="field">
+          <%= f.label :uploaded_file %><br>
+          <%= f.file_field :uploaded_file %>
+        </div>
+        <div class="field">
           <%= pets_form.label :name %><br>
           <%= pets_form.text_field :name %>
         </div>
