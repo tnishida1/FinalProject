@@ -17,6 +17,7 @@
     <% @owner.pets.each do |pet| %>
       <% if !pet.new_record? %>
         <tr>
+          <td><%= image_tag root_url + "/images/" + pet.filename, size: "200x200", alt: pet.filename %></td>
           <td><%= pet.name %></td>
           <td><%= pet.claimed %></td>
           <td><%= link_to 'Edit', edit_pet_path(pet) %></td>

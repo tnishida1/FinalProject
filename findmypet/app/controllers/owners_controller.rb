@@ -25,15 +25,6 @@ class OwnersController < ApplicationController
   # POST /owners
   def create
     @owner = Owner.new(owner_params)
-    @image.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
-    @image.user = current_user
-
-    @uploaded_io = params[:image][:uploaded_file]
-
-    File.open(Rails.root.join('public', 'images', @image.filename), 'wb') do |file|
-        file.write(@uploaded_io.read)
-    end
-
     if @owner.save
       redirect_to @owner, notice: 'Owner was successfully created.'
     else

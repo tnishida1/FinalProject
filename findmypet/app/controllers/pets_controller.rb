@@ -12,7 +12,7 @@ class PetsController < ApplicationController
 
     # This is similar to Pet.new, BUT it creates the new pet
     # in the context of a Owner object and sets the foreign key
-    @pet = @owner.pets.new
+    @pet = @owner.owners.new
   end
 
   # GET /pets/1/edit
@@ -27,6 +27,14 @@ class PetsController < ApplicationController
   def create
     @owner = Owner.find params[:owner_id]
     @pet = @owner.pets.new(pet_params)
+    @pet.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
+    @pet.user = current_user
+
+    @uploaded_io = params[:owner][:uploaded_file]
+
+    File.open(Rails.root.join('public', 'images', @pet.filename), 'wb') do |file|
+        file.write(@uploaded_io.read)
+    end    
 
     if @pet.save
       redirect_to owner_pets_url(@owner) , notice: 'Pet was successfully created.'
@@ -60,6 +68,6 @@ class PetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
-      params.require(:pet).permit(:name, :claimed, :pet)
+      params.require(:pet).permit(:name, :claimed, :owner_id)
     end
 end

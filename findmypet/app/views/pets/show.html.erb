@@ -15,5 +15,10 @@
   <%= @pet.owner %>
 </p>
 
+<p>
+  <%= owner_pet root_url + "/pets/" + @pet.filename, alt: @pet.filename %>
+</p>
+
+
 <%= link_to 'Edit', edit_pet_path(@pet) %> |
-<%= link_to 'Back', pets_path %>
+<%= link_to 'Back', pet_path %>
