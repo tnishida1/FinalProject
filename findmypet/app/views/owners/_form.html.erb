@@ -1,0 +1,46 @@
+<%= form_for(@owner) do |f| %>
+  <% if @owner.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@owner.errors.count, "error") %> prohibited this owner from being saved:</h2>
+
+      <ul>
+      <% @owner.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :first %><br>
+    <%= f.text_field :first %>
+  </div>
+  <div class="field">
+    <%= f.label :last %><br>
+    <%= f.text_field :last %>
+  </div>
+  <div class="field">
+    <%= f.label :zipcode %><br>
+    <%= f.text_field :zipcode %>
+  </div>
+  <% if @owner.pets.last.new_record? %>
+    <%= f.fields_for :pets do |pets_form| %>
+      <h3>New Pet</h3>
+      <div style="margin-left:30px;">
+        <div class="field">
+          <%= pets_form.label :name %><br>
+          <%= pets_form.text_field :name %>
+        </div>
+        <div class="checkbox">
+          <%= pets_form.label :claimed %><br>
+          <%= pets_form.check_box :claimed %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <br>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first: MyString
+  last: MyString
+  claimed: false
+  user_id: 
+
+two:
+  first: MyString
+  last: MyString
+  claimed: false
+  user_id: 

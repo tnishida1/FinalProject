@@ -1,0 +1,5 @@
+<h1>Editing pet <%= @pet.owner.name %> </h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', owner_pets_path(@pet.owner) %>
