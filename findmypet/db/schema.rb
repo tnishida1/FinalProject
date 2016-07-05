@@ -24,11 +24,12 @@ ActiveRecord::Schema.define(version: 20160702235619) do
 
   create_table "pets", force: :cascade do |t|
     t.string   "name"
-    t.boolean  "claimed"
+    t.boolean  "claim"
     t.string   "filename"
+    t.string   "description"
     t.integer  "owner_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "pets", ["owner_id"], name: "index_pets_on_owner_id"

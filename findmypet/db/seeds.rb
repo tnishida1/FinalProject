@@ -1,3 +1,9 @@
+users = User.create(
+  [
+    { email: "s@s.com", password: "s", password_confirmation: "s"},
+    { email: "f@f.com", password: "f", password_confirmation: "f"}
+  ]
+)
 
 owners = Owner.create(
   [
@@ -9,9 +15,9 @@ owners = Owner.create(
 
 pets = Pet.create(
   [
-    { name: "Fido", claimed: "f", filename: "1.jpg", owner_id: owners[0].id},
-    { name: "Dingo", claimed: "false", filename: "2.jpg", owner_id: owners[0].id},
-    { name: "Bongo", claimed: "true", filename: "3.jpg", owner_id: owners[1].id}
+    { name: "Fido", description: "Corgi", filename: "1.jpg", owner_id: owners[0].id},
+    { name: "Dingo", description: "dog2", filename: "2.jpg", owner_id: owners[0].id},
+    { name: "Bongo", description: "dog3", filename: "3.jpg", owner_id: owners[1].id}
   ]
 )
 

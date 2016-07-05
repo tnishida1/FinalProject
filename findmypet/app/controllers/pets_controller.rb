@@ -28,7 +28,7 @@ class PetsController < ApplicationController
     @owner = Owner.find params[:owner_id]
     @pet = @owner.pets.new(pet_params)
     @pet.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
-    @pet.user = current_user
+    @owner.user = current_user
 
     @uploaded_io = params[:owner][:uploaded_file]
 
@@ -68,6 +68,6 @@ class PetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
-      params.require(:pet).permit(:name, :claimed, :owner_id)
+      params.require(:pet).permit(:name, :description)
     end
 end

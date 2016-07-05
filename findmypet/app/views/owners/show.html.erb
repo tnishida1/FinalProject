@@ -19,9 +19,15 @@
         <tr>
           <td><%= image_tag root_url + "/images/" + pet.filename, size: "200x200", alt: pet.filename %></td>
           <td><%= pet.name %></td>
-          <td><%= pet.claimed %></td>
+          <td><%= pet.description %></td>
           <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
           <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= form_for([@owner, @pet]) do |f| %>
+                <div class="field">
+                  <%= f.check_box :claim %>
+                  <%= f.label :claim %>?
+                </div>
+              <% end %></td>
         </tr>
       <% end %>
     <% end %>

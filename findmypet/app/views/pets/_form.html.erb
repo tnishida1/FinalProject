@@ -16,14 +16,15 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :claimed %><br>
-    <%= f.check_box :claimed %>
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
   </div>
   <div class="field">
-    <%= f.label :owner_id %><br>
-    <%= f.text_field :owner_id %>
+    <%= f.label :uploaded_file %><br>
+    <%= f.file_field :uploaded_file %>
   </div>
-  <div class="actions">
+
+ <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
