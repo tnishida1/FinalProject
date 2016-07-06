@@ -4,13 +4,10 @@ class OwnersController < ApplicationController
   # GET /owners
   def index
     @owners = Owner.all
-
   end
 
   # GET /owners/1
   def show
-  
-
     @pet = @owner.pets.new
   end
 

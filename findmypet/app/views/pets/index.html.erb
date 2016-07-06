@@ -7,24 +7,35 @@
     <tr>
       <th>Body</th>
       <th>Owner</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @pets.each do |pet| %>
-      <tr>
-        <td><%= pet.body %></td>
-        <td><%= pet.owner %></td>
-        <td><%= link_to 'Show', pet %></td>
-        <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
-        <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <% @owner.pets.each do |pet| %>
+      <% if pet.id == params[:pet_id] %>
+        <tr>
+          <td><%= "#{@owner.name}'s post for #{pet.name}" %></td>
+          <td><%= image_tag root_url + "/images/" + pet.filename, size: "500x500", alt: pet.filename %></td>
+          <td><%= pet.description %></td>
+          <td><%= link_to 'Show', pet %></td>
+          <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
+          <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% else %>
+        <tr>
+          <td><%= "#{@owner.name}'s post for #{pet.name}" %></td>
+          <td><%= image_tag root_url + "/images/" + pet.filename, size: "500x500", alt: pet.filename %></td>
+          <td><%= pet.description %></td>
+          <td><%= link_to 'Show', pet %></td>
+          <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
+          <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Pet', new_pet_path %>
+<%= link_to 'New Pet', new_owner_pet_path %>
 

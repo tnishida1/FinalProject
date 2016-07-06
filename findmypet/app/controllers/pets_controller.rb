@@ -1,14 +1,24 @@
 class PetsController < ApplicationController
   before_action :set_pet, only: [:edit, :update, :destroy]
 
+
+  def index
+    @owner = Owner.find params[:owner_id]
+  end
   # GET owners/:owner_id/pets/new
   # Create a new pet in the context of a Owner object
   # that way the Pet's foreign key (owner_id) will be
   # initialized correctly.
+  def show
+
+  end
+
   def new
 
     # if no one is logged in, redirect to loging
-
+    if current_user == nil
+        redirect_to new_user_registration
+    end
     # if somone is logged in but there that user has not created
     # an owner object yet, redirect to the new owner page
     @associated_user = Owner.where(user_id: current_user.id)
@@ -20,7 +30,7 @@ class PetsController < ApplicationController
 
     # since our the pet new path contains the owner's id
     # we can use params[:owner_id] to get that id
-    @owner = Owner.find params[:owner_id]
+    @owner = Owner.find params[:user_id]
 
     # This is similar to Pet.new, BUT it creates the new pet
     # in the context of a Owner object and sets the foreign key
