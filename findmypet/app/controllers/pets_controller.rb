@@ -3,7 +3,8 @@ class PetsController < ApplicationController
 
 
   def index
-    @owner = Owner.find params[:owner_id]
+    @owners = Owner.all
+    @post_type = params[:post_type]
   end
   # GET owners/:owner_id/pets/new
   # Create a new pet in the context of a Owner object
@@ -30,11 +31,11 @@ class PetsController < ApplicationController
 
     # since our the pet new path contains the owner's id
     # we can use params[:owner_id] to get that id
-    @owner = Owner.find params[:user_id]
+    @owner = Owner.find current_user.id
 
     # This is similar to Pet.new, BUT it creates the new pet
     # in the context of a Owner object and sets the foreign key
-    @pet = @owner.owners.new
+    @pet = @owner.pets.new
   end
 
   # GET /pets/1/edit
@@ -91,6 +92,6 @@ class PetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
-      params.require(:pet).permit(:name, :description)
+      params.require(:pet).permit(:name, :description, )
     end
 end

@@ -14,7 +14,10 @@
       <% owner.pets.each do |pet| %>
         <% if pet.lost %>
           <tr>
-            <td><%= link_to "#{pet.name}", owner_pets_path(pet.id) %></td>
+            <%= form_tag(owner_pets_path(:id), method: "GET") do %>
+              <td><%= submit_tag("Lost Pets") %><td/>
+              <%= hidden_field_tag("lost", @post_type) %>
+            <% end %>
           </tr>
           <tr>
             <td><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></td>
@@ -25,7 +28,7 @@
   </tbody>
 </table>
 <% if current_user != nil %>
-  <%= link_to "Make A Found Pet Post", new_owner_pet_path(:id) %>
+  <%= link_to "Make A Found Pet Post", new_owner_pet_path(:pet_found) %>
 <% end %>
 <br>
 <br>
@@ -41,7 +44,10 @@
       <% owner.pets.each do |pet| %>
         <% if pet.found %>
           <tr>
-            <td><%= link_to "#{pet.name}", owner_pets_path(pet.owner) %></td>               </tr>
+            <%= form_tag(owner_pets_path, method: "GET") do %>
+              <td><%= submit_tag("Found Pets") %><td/>
+              <%= hidden_field_tag("found", @post_type) %>
+            <% end %>
           <tr>
             <td><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></td>
           </tr>
