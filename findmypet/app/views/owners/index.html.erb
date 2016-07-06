@@ -12,9 +12,9 @@
   <tbody>
     <% @owners.each do |owner| %>
       <% owner.pets.each do |pet| %>
-        <% if pet.lost %>
+        <% if owner.posts.post_type %>
           <tr>
-            <%= form_tag(owner_pets_path(:id), method: "GET") do %>
+            <%= form_tag(posts, method: :get) do %>
               <td><%= submit_tag("Lost Pets") %><td/>
               <%= hidden_field_tag("lost", @post_type) %>
             <% end %>

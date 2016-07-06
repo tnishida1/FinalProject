@@ -4,6 +4,7 @@ class OwnersController < ApplicationController
   # GET /owners
   def index
     @owners = Owner.all
+    @post = Post.all
   end
 
   # GET /owners/1
