@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160702235619) do
+ActiveRecord::Schema.define(version: 20160706213254) do
 
   create_table "owners", force: :cascade do |t|
     t.string   "first"
@@ -27,14 +27,20 @@ ActiveRecord::Schema.define(version: 20160702235619) do
     t.boolean  "claim"
     t.string   "filename"
     t.string   "description"
-    t.boolean  "lost"
-    t.boolean  "found"
     t.integer  "owner_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   add_index "pets", ["owner_id"], name: "index_pets_on_owner_id"
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "post_type"
+    t.integer  "pet_id"
+    t.integer  "owner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

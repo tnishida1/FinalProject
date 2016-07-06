@@ -5,8 +5,6 @@ class CreatePets < ActiveRecord::Migration
       t.boolean :claim
       t.string :filename
       t.string :description
-      t.boolean :lost
-      t.boolean :found
       t.belongs_to :owner, index: true
 
       t.timestamps null: false
