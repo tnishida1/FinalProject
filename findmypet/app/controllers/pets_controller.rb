@@ -6,6 +6,18 @@ class PetsController < ApplicationController
   # that way the Pet's foreign key (owner_id) will be
   # initialized correctly.
   def new
+
+    # if no one is logged in, redirect to loging
+
+    # if somone is logged in but there that user has not created
+    # an owner object yet, redirect to the new owner page
+    @associated_user = Owner.where(user_id: current_user.id)
+    if @associated_user == nil
+	redirect_to new_owner_path
+    end
+
+
+
     # since our the pet new path contains the owner's id
     # we can use params[:owner_id] to get that id
     @owner = Owner.find params[:owner_id]
@@ -27,8 +39,9 @@ class PetsController < ApplicationController
   def create
     @owner = Owner.find params[:owner_id]
     @pet = @owner.pets.new(pet_params)
-    @pet.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
     @owner.user = current_user
+
+    @pet.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
 
     @uploaded_io = params[:owner][:uploaded_file]
 

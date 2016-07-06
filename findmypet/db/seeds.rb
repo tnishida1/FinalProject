@@ -21,5 +21,10 @@ pets = Pet.create(
   ]
 )
 
-
-
+posts = Post.create(
+  [
+    { body: "Blue green dog big long tail", lost: 'f', found: 't', owner_id: owners[0].id},
+    { body: "Red cat oragne small tail", lost: 't', found: 'f', owner_id: owners[0].id},
+    { body: "some random placeholder texty blah", lost: 'f', found: 't', owner_id: owners[1].id}
+  ]
+)

@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160702235619) do
+ActiveRecord::Schema.define(version: 20160706034157) do
 
   create_table "owners", force: :cascade do |t|
     t.string   "first"
     t.string   "last"
     t.integer  "zipcode"
-    t.string   "user_id"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 20160702235619) do
   end
 
   add_index "pets", ["owner_id"], name: "index_pets_on_owner_id"
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "body"
+    t.integer  "owner_id"
+    t.boolean  "lost"
+    t.boolean  "found"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "posts", ["owner_id"], name: "index_posts_on_owner_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

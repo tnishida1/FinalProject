@@ -5,7 +5,7 @@ class CreatePets < ActiveRecord::Migration
       t.boolean :claim
       t.string :filename
       t.string :description
-      t.string :owner_id
+      t.integer :owner_id
       t.references :owner, index: true
 
       t.timestamps null: false

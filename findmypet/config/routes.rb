@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   devise_for :users
   resources :owners do
     resources :pets, shallow: true
-    resources :owner_users, shallow: true
+    resources :posts, shallow: true
   end
-  root 'owners#index'
+  root 'posts#index'
   
 end

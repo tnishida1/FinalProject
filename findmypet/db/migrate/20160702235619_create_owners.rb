@@ -4,7 +4,7 @@ class CreateOwners < ActiveRecord::Migration
       t.string :first
       t.string :last
       t.integer :zipcode
-      t.string :user_id
+      t.references :user
 
       t.timestamps null: false
     end
