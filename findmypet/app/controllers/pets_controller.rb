@@ -18,24 +18,15 @@ class PetsController < ApplicationController
 
     # if no one is logged in, redirect to loging
     if current_user == nil
-        redirect_to new_user_registration
-    end
+        redirect_to new_user_registration_url
     # if somone is logged in but there that user has not created
     # an owner object yet, redirect to the new owner page
-    @associated_user = Owner.where(user_id: current_user.id)
-    if @associated_user == nil
-	redirect_to new_owner_path
+    elsif Owner.where(user_id: current_user.id) == nil
+        redirect_to new_owner_path
+    else
+        @owner = Owner.find params[:owner_id]
+        @pet = @owner.pets.new
     end
-
-
-
-    # since our the pet new path contains the owner's id
-    # we can use params[:owner_id] to get that id
-    @owner = Owner.find current_user.id
-
-    # This is similar to Pet.new, BUT it creates the new pet
-    # in the context of a Owner object and sets the foreign key
-    @pet = @owner.pets.new
   end
 
   # GET /pets/1/edit
@@ -43,18 +34,13 @@ class PetsController < ApplicationController
     # edit routes are not nested (we already know our owner's foreign_key)
   end
 
-  # POST owners:/:owner_id/pets
-  # we need the owner's key in the URL to make sure that someone 
-  # isn't trying to hack the id of the new pet's owner
-  # rails ensures that the URL has not be tampered with
   def create
     @owner = Owner.find params[:owner_id]
-    @pet = @owner.pets.new(pet_params)
-    @owner.user = current_user
-
+    @pet = Pet.new(pet_params)
     @pet.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
+    @pet.owner = @owner
 
-    @uploaded_io = params[:owner][:uploaded_file]
+    @uploaded_io = params[:pet][:uploaded_file]
 
     File.open(Rails.root.join('public', 'images', @pet.filename), 'wb') do |file|
         file.write(@uploaded_io.read)

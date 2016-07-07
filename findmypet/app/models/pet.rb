@@ -5,7 +5,7 @@ class Pet < ActiveRecord::Base
     self.filename = SecureRandom.hex(10)
   end
 
-  belongs_to :post
+  has_one :post
   belongs_to :owner
 
 end

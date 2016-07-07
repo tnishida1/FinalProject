@@ -4,7 +4,8 @@ class OwnersController < ApplicationController
   # GET /owners
   def index
     @owners = Owner.all
-    @post = Post.all
+    @posts = Post.all
+    #@pet = Pet.find (:post.pet_id)
   end
 
   # GET /owners/1

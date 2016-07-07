@@ -1,0 +1,25 @@
+@import 'slick';
+@import 'slick-theme';
+
+.multiple-items {
+  div {
+    text-align: center;
+    font-size: 30px;
+  }
+}
+
+.slick-slide {
+  width: 300px;
+}
+
+.slick-prev::before, .slick-next::before {
+  color: #c1c1c1;
+}
+
+.slick-next {
+  right: -5px;
+}
+
+.slick-prev {
+  left: -5px;
+}

@@ -4,8 +4,9 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    @owners = Owner.all
     @posts = Post.all
-    @post = params[:post_type]
+    @post_type = params[:post_type]
   end
 
   # GET /posts/1
@@ -16,6 +17,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @post.post_type = @post_type
   end
 
   # GET /posts/1/edit

@@ -1,62 +1,56 @@
-<p id="notice"><%= notice %></p>
+<html>
+  <body>
 
-<h1>Listing Owners</h1>
+    <table align="center">
+      <h3>Lost Pets</h3>
+      <tbody>
+        <tr>
+          <%= form_tag(posts_path, method: :get) do %>
+            <td><%= submit_tag("Lost Pets") %><td/>
+            <%= hidden_field_tag(:post_type, "lost") %>
+          <% end %>include javascript...
+        </tr>
+      </tbody>
+    </table>
+    <% if current_user != nil %>
+      <%= link_to "Make A Lost Pet Post", new_owner_pet_path(:id) %>
+    <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Lost Pets</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @owners.each do |owner| %>
-      <% owner.pets.each do |pet| %>
-        <% if owner.posts.post_type %>
-          <tr>
-            <%= form_tag(posts, method: :get) do %>
-              <td><%= submit_tag("Lost Pets") %><td/>
-              <%= hidden_field_tag("lost", @post_type) %>
-            <% end %>
-          </tr>
-          <tr>
-            <td><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></td>
-          </tr>
+    <div class="multiple-items">
+      <% @owners.each do |owner| %>
+        <% lost_pets = owner.pets.map {|pet| pet if pet.post.post_type == "lost"}.compact %>
+        <% lost_pets.each do |pet| %>
+          <div><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></div>
         <% end %>
       <% end %>
+    </div>
+ 
+    <br>
+    <br>
+    <table align="center">
+      <h3>Found Pets</h3>
+      <tbody>
+        <tr>
+          <%= form_tag(posts_path, method: :get) do %>
+            <td><%= submit_tag("Found Pets") %><td/>
+            <%= hidden_field_tag(:post_type, "found") %>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+    <% if current_user != nil %>
+      <%= link_to "Make A Found Pet Post", new_owner_pet_path(:id) %>
     <% end %>
-  </tbody>
-</table>
-<% if current_user != nil %>
-  <%= link_to "Make A Found Pet Post", new_owner_pet_path(:pet_found) %>
-<% end %>
-<br>
-<br>
-<table>
-  <thead>
-    <tr>
-      <th>Found Pets</th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @owners.each do |owner| %>
-      <% owner.pets.each do |pet| %>
-        <% if pet.found %>
-          <tr>
-            <%= form_tag(owner_pets_path, method: "GET") do %>
-              <td><%= submit_tag("Found Pets") %><td/>
-              <%= hidden_field_tag("found", @post_type) %>
-            <% end %>
-          <tr>
-            <td><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></td>
-          </tr>
+    <div class="multiple-items">
+      <% @owners.each do |owner| %>
+        <% found_pets = owner.pets.map {|pet| pet if pet.post.post_type == "found"}.compact %>
+        <% found_pets.each do |pet| %>
+          <div align="center"><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></div>
         <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
-<% if current_user != nil %>
- <%= link_to "Make A Found Pet Post", new_owner_pet_path(:id) %>
-<% end %>
+    </div>
 
+
+  </body>
+</html>
