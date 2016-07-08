@@ -8,7 +8,7 @@
           <%= form_tag(posts_path, method: :get) do %>
             <td><%= submit_tag("Lost Pets") %><td/>
             <%= hidden_field_tag(:post_type, "lost") %>
-          <% end %>include javascript...
+          <% end %>
         </tr>
       </tbody>
     </table>
@@ -18,7 +18,8 @@
 
     <div class="multiple-items">
       <% @owners.each do |owner| %>
-        <% lost_pets = owner.pets.map {|pet| pet if pet.post.post_type == "lost"}.compact %>
+        <% lost_pets = owner.pets.map {|pet| pet if pet.post != nil}.compact %>
+        <% lost_pets.map! {|pet| pet if pet.post.post_type == "lost"}.compact! %>
         <% lost_pets.each do |pet| %>
           <div><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></div>
         <% end %>
@@ -44,9 +45,10 @@
 
     <div class="multiple-items">
       <% @owners.each do |owner| %>
-        <% found_pets = owner.pets.map {|pet| pet if pet.post.post_type == "found"}.compact %>
+        <% found_pets = owner.pets.map {|pet| pet if pet.post != nil}.compact %>
+        <% found_pets.map! {|pet| pet if pet.post.post_type == "found"}.compact! %>
         <% found_pets.each do |pet| %>
-          <div align="center"><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></div>
+          <div><%= image_tag root_url + "/images/" + pet.filename, size: "100x100", alt: pet.filename %></div>
         <% end %>
       <% end %>
     </div>

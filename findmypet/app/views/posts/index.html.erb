@@ -2,72 +2,70 @@
 
 <% if @post_type == "lost" %>
   <h1>Lost Pet Posts</h1>
-<% end %>
+
 <% if current_user != nil %>
-  <%= link_to 'Create A New Post', new_owner_pet_path(:id) %>
+  <%= form_tag(new_owner_pet_path(:id), method: :get) do %>
+    <%= submit_tag("Create A New Post") %>
+    <%= hidden_field_tag(:post_type, "lost") %>
+  <% end %>
 <% end %>
 
 <% @owners.each do |owner| %>
   <% if owner.pets != nil %>
-    <% if (@post_type == "lost") %>
-      <% lost_pets = owner.pets.map {|pet| pet if pet.post.post_type == "lost"}.compact %>
-      <% lost_pets.each do |pet| %>
-        <h3><%= "#{owner.name}'s post for #{pet.name}" %></h3>
-        <table>
-          <tbody>
-            <tr>
-              <td><%= image_tag root_url + "/images/" + pet.filename, size: "250x250", alt: pet.filename %></td>
-            </tr>
-            <tr>
-              <td><%= pet.description %></td>
-            </tr>
-            <tr>
-              <td><%= link_to 'Show', pet %></td>
-              <% if owner.user_id == current_user #if the owner of image is current user %>
-                <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
-                <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-i             <% end %>
-            </tr>
-          </tbody>
-        </table>
-      <% end %>
+    <% lost_posts = owner.posts.map {|post| post if post != nil && post.post_type == "lost"}.compact %>
+    <% lost_posts.each do |post| %>
+      <h3><%= "#{owner.name}'s post for #{post.pet.name}" %></h3>
+      <table>
+      <tbody>
+      <tr>
+        <td><%= image_tag root_url + "/images/" + post.pet.filename, size: "250x250", alt: post.pet.filename %></td>
+      </tr>
+      <tr>
+        <td><%= post.pet.description %></td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Show', post.pet %></td>
+        <% if owner.user_id == current_user #if the owner of image is current user %>
+          <td><%= link_to 'Edit', edit_pet_path(post.pet) %></td>
+          <td><%= link_to 'Destroy', post.pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+      </tbody>
+      </table>
     <% end %>
   <% else %>
     <h3>Oops! There are no posts yet, come back later when people have lost pets!</h3>
   <% end %>
+<% end %>
 <% end %>
 
 <% if @post_type == "found" %>
-  <h1>Found Pet Posts</h1>
-<% end %>
+<h1>Found Pet Posts</h1>
 
 <% @owners.each do |owner| %>
   <% if owner.pets != nil %>
-    <% if (@post_type == "found") %>
-      <% found_pets = owner.pets.map {|pet| pet if pet.post.post_type == "found"}.compact %>
-      <% found_pets.each do |pet| %>
-        <h3><%= "#{owner.name}'s post for #{pet.name}" %></h3>
+      <% lost_posts = owner.posts.map {|post| post if post != nil && post.post_type == "found"}.compact %>
+      <% lost_posts.each do |post| %>
+        <h3><%= "#{owner.name}'s post for #{post.pet.name}" %></h3>
         <table>
           <tbody>
             <tr>
-              <td><%= image_tag root_url + "/images/" + pet.filename, size: "250x250", alt: pet.filename %></td>
+              <td><%= image_tag root_url + "/images/" + post.pet.filename, size: "250x250", alt: post.pet.filename %></td>
             </tr>
             <tr>
-              <td><%= pet.description %></td>
-            </tr>
+              <td><%= post.pet.description %></td>            </tr>
             <tr>
-              <td><%= link_to 'Show', pet %></td>
+              <td><%= link_to 'Show', post.pet %></td>
               <% if owner.user_id == current_user #if the owner of image is current user %>
-                <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
-                <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-i             <% end %>
+                <td><%= link_to 'Edit', edit_pet_path(post.pet) %></td>
+                <td><%= link_to 'Destroy', post.pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% end %>
             </tr>
           </tbody>
         </table>
       <% end %>
-    <% end %>
   <% else %>
     <h3>Oops! There are no posts yet, come back later when people have lost pets!</h3>
   <% end %>
 <% end %>
-
+<% end %>

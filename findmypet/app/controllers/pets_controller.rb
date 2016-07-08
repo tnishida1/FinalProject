@@ -24,8 +24,9 @@ class PetsController < ApplicationController
     elsif Owner.where(user_id: current_user.id) == nil
         redirect_to new_owner_path
     else
-        @owner = Owner.find params[:owner_id]
+        @owner = current_user.owner
         @pet = @owner.pets.new
+        @post = Post.new
     end
   end
 
@@ -37,15 +38,19 @@ class PetsController < ApplicationController
   def create
     @owner = Owner.find params[:owner_id]
     @pet = Pet.new(pet_params)
+    @pet.post.post_type = params[:post_type]
     @pet.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
     @pet.owner = @owner
 
     @uploaded_io = params[:pet][:uploaded_file]
 
     File.open(Rails.root.join('public', 'images', @pet.filename), 'wb') do |file|
-        file.write(@uploaded_io.read)
+        if @uploaded_io != nil
+            file.write(@uploaded_io.read)
+        else
+            @pet.save == false
+        end
     end    
-
     if @pet.save
       redirect_to owner_pets_url(@owner) , notice: 'Pet was successfully created.'
     else
@@ -78,6 +83,6 @@ class PetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pet_params
-      params.require(:pet).permit(:name, :description, )
+      params.require(:pet).permit(:name, :description, post_attributes: [:post_type])
     end
 end
