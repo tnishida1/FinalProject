@@ -5,10 +5,11 @@
 
 <% if current_user != nil %>
   <%= form_tag(new_owner_pet_path(:id), method: :get) do %>
-    <%= submit_tag("Create A New Post") %>
+    <%= submit_tag("New Lost Post") %>
     <%= hidden_field_tag(:post_type, "lost") %>
   <% end %>
 <% end %>
+
 
 <% @owners.each do |owner| %>
   <% if owner.pets != nil %>
@@ -18,17 +19,9 @@
       <table>
       <tbody>
       <tr>
-        <td><%= image_tag root_url + "/images/" + post.pet.filename, size: "250x250", alt: post.pet.filename %></td>
+        <td><%= link_to image_tag(root_url + "/images/" + post.pet.filename, size: "250x250", alt: post.pet.filename), post.pet %></td>
       </tr>
       <tr>
-        <td><%= post.pet.description %></td>
-      </tr>
-      <tr>
-        <td><%= link_to 'Show', post.pet %></td>
-        <% if owner.user_id == current_user #if the owner of image is current user %>
-          <td><%= link_to 'Edit', edit_pet_path(post.pet) %></td>
-          <td><%= link_to 'Destroy', post.pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
       </tr>
       </tbody>
       </table>
@@ -42,6 +35,13 @@
 <% if @post_type == "found" %>
 <h1>Found Pet Posts</h1>
 
+<% if current_user != nil %>
+  <%= form_tag(new_owner_pet_path(:id), method: :get) do %>
+    <%= submit_tag("New Found Post") %>
+    <%= hidden_field_tag(:post_type, "found") %>
+  <% end %>
+<% end %>
+
 <% @owners.each do |owner| %>
   <% if owner.pets != nil %>
       <% lost_posts = owner.posts.map {|post| post if post != nil && post.post_type == "found"}.compact %>
@@ -52,8 +52,6 @@
             <tr>
               <td><%= image_tag root_url + "/images/" + post.pet.filename, size: "250x250", alt: post.pet.filename %></td>
             </tr>
-            <tr>
-              <td><%= post.pet.description %></td>            </tr>
             <tr>
               <td><%= link_to 'Show', post.pet %></td>
               <% if owner.user_id == current_user #if the owner of image is current user %>

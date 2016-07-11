@@ -11,11 +11,10 @@ class PetsController < ApplicationController
   # that way the Pet's foreign key (owner_id) will be
   # initialized correctly.
   def show
-
+    @pet = Pet.find_by id: params[:id]
   end
 
   def new
-
     # if no one is logged in, redirect to loging
     if current_user == nil
         redirect_to new_user_registration_url
@@ -27,6 +26,7 @@ class PetsController < ApplicationController
         @owner = current_user.owner
         @pet = @owner.pets.new
         @post = Post.new
+	@post_type = params[:post_type]
     end
   end
 
@@ -38,9 +38,10 @@ class PetsController < ApplicationController
   def create
     @owner = Owner.find params[:owner_id]
     @pet = Pet.new(pet_params)
-    @pet.post.post_type = params[:post_type]
     @pet.generate_filename  # a function you write to generate a random filename and put it in the images "filename" variable
     @pet.owner = @owner
+
+
 
     @uploaded_io = params[:pet][:uploaded_file]
 
@@ -52,6 +53,12 @@ class PetsController < ApplicationController
         end
     end    
     if @pet.save
+      post = Post.new
+      post.owner = @pet.owner
+      post.pet_id = @pet.id
+      post.post_type = params[:post_type]
+      post.save
+
       redirect_to owner_pets_url(@owner) , notice: 'Pet was successfully created.'
     else
       render :new

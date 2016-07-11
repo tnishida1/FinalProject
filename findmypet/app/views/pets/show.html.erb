@@ -6,19 +6,19 @@
 </p>
 
 <p>
-  <strong>Claim:</strong>
-  <%= @pet.claim %>
+  <strong>Posted By:</strong>
+  <%= link_to "#{@pet.owner.name}", owner_path %>
 </p>
 
 <p>
-  <strong>Owner:</strong>
-  <%= @pet.owner %>
-</p>
-
-<p>
-  <%= owner_pet root_url + "/pets/" + @pet.filename, alt: @pet.filename %>
+  <%= image_tag root_url + "/images/" + @pet.filename, alt: @pet.filename %>
 </p>
 
 
-<%= link_to 'Edit', edit_pet_path(@pet) %> |
-<%= link_to 'Back', pet_path %>
+<%= link_to 'Edit Post', edit_pet_path(@pet) %>
+<br>
+<br>
+<%= form_tag(posts_path, method: :get) do %>
+  <%= submit_tag("Back to lost pets") %>
+<%= hidden_field_tag(:post_type, "lost") %>
+<% end %>

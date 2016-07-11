@@ -3,9 +3,11 @@ class OwnersController < ApplicationController
 
   # GET /owners
   def index
+    if current_user != nil
+      @owner = current_user.owner
+    end
     @owners = Owner.all
     @posts = Post.all
-    #@pet = Pet.find (:post.pet_id)
   end
 
   # GET /owners/1

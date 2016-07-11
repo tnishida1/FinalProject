@@ -15,16 +15,20 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+  <br>
   <div class="field">
     <%= f.label :description %><br>
     <%= f.text_field :description %>
   </div>
+  <br>
   <div class="field">
     <%= f.label :uploaded_file %><br>
     <%= f.file_field :uploaded_file %>
   </div>
-
- <div class="actions">
+  <br>
+  <%= hidden_field_tag(:post_type, @post_type) %>
+  <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>

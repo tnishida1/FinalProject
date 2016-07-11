@@ -13,7 +13,7 @@
       </tbody>
     </table>
     <% if current_user != nil %>
-      <%= link_to "Make A Lost Pet Post", new_owner_pet_path(:id) %>
+      <%= link_to "Make A Lost Pet Post", new_owner_pet_path(@owner)+ "?post_type=lost" %>
     <% end %>
 
     <div class="multiple-items">
@@ -40,7 +40,7 @@
       </tbody>
     </table>
     <% if current_user != nil %>
-      <%= link_to "Make A Found Pet Post", new_owner_pet_path(:id) %>
+      <%= link_to "Make A Found Pet Post", new_owner_pet_path(@owner) + "?post_type=found" %>
     <% end %>
 
     <div class="multiple-items">
