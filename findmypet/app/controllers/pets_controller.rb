@@ -4,7 +4,8 @@ class PetsController < ApplicationController
 
   def index
     @owners = Owner.all
-    @post_type = params[:post_type]
+    @owner = Owners
+    
   end
   # GET owners/:owner_id/pets/new
   # Create a new pet in the context of a Owner object
@@ -59,7 +60,7 @@ class PetsController < ApplicationController
       post.post_type = params[:post_type]
       post.save
 
-      redirect_to owner_pets_url(@owner) , notice: 'Pet was successfully created.'
+      redirect_to pet_url(@pet) , notice: 'Pet was successfully created.'
     else
       render :new
     end
