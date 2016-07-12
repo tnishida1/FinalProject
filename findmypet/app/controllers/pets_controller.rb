@@ -4,7 +4,7 @@ class PetsController < ApplicationController
 
   def index
     @owners = Owner.all
-    @owner = Owners
+    @owner = current_user.owner
     
   end
   # GET owners/:owner_id/pets/new

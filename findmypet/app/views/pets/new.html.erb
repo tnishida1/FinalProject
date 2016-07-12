@@ -1,5 +1,9 @@
 <h1>New pet for <%= @owner.name %> </h1>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', owner_pets_path %>
+<br>
+<br>
+<%= form_tag(posts_path, method: :get) do %>
+  <%= submit_tag("Back to lost pets") %>
+<%= hidden_field_tag(:post_type, "lost") %>
+<% end %>

@@ -23,25 +23,6 @@
     <%= f.label :zipcode %><br>
     <%= f.text_field :zipcode %>
   </div>
-  <% if @owner.pets.last.new_record? %>
-    <%= f.fields_for :pets do |pets_form| %>
-      <h3>New Pet</h3>
-      <div style="margin-left:30px;">
-        <div class="field">
-          <%= f.label :uploaded_file %><br>
-          <%= f.file_field :uploaded_file %>
-        </div>
-        <div class="field">
-          <%= pets_form.label :name %><br>
-          <%= pets_form.text_field :name %>
-        </div>
-        <div class="checkbox">
-          <%= pets_form.label :description %><br>
-          <%= pets_form.check_box :description %>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
   <br>
 
   <div class="actions">

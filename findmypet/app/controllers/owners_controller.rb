@@ -30,7 +30,8 @@ class OwnersController < ApplicationController
   def create
     @owner = Owner.new(owner_params)
     if @owner.save
-      redirect_to @owner, notice: 'Owner was successfully created.'
+      current_user.owner = @owner
+      redirect_to owners_url, notice: 'Owner was successfully created.'
     else
       render :new
     end
@@ -39,7 +40,7 @@ class OwnersController < ApplicationController
   # PATCH/PUT /owners/1
   def update
     if @owner.update(owner_params)
-      redirect_to @owner, notice: 'Owner was successfully updated.'
+      redirect_to owners_url, notice: 'Owner was successfully updated.'
     else
       render :edit
     end
